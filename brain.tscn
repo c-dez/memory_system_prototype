@@ -1,6 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://2nnk6symldku"]
-
-[ext_resource type="Script" uid="uid://b2uhhpp3yfs4" path="res://brain.gd" id="1_42xjx"]
-
-[node name="Brain" type="Node"]
-script = ExtResource("1_42xjx")
