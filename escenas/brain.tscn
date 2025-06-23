@@ -5,9 +5,11 @@
 [node name="Brain" type="Node"]
 script = ExtResource("1_x2cbc")
 
-[node name="Button" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="Button3" type="Button" parent="."]
+offset_left = 5.0
+offset_top = 4.0
+offset_right = 90.0
+offset_bottom = 35.0
 text = "Crush +=1"
 
 [node name="Button2" type="Button" parent="."]
@@ -38,7 +40,31 @@ offset_right = 153.0
 offset_bottom = 121.0
 text = "Load"
 
-[connection signal="pressed" from="Button" to="." method="_on_button_pressed_plus"]
+[node name="LineEdit" type="LineEdit" parent="."]
+offset_left = 19.0
+offset_top = 179.0
+offset_right = 147.0
+offset_bottom = 210.0
+placeholder_text = "insert name"
+
+[node name="Ok" type="Button" parent="LineEdit"]
+layout_mode = 0
+offset_left = 137.0
+offset_top = 3.0
+offset_right = 168.0
+offset_bottom = 34.0
+text = "OK"
+
+[node name="ChangeName" type="Button" parent="."]
+offset_left = 25.0
+offset_top = 140.0
+offset_right = 139.0
+offset_bottom = 171.0
+text = "Change name"
+
+[connection signal="pressed" from="Button3" to="." method="_on_button_pressed_plus"]
 [connection signal="pressed" from="Button2" to="." method="_on_button_pressed_minus"]
 [connection signal="pressed" from="Save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="Load" to="." method="_on_load_pressed"]
+[connection signal="pressed" from="LineEdit/Ok" to="." method="_on_ok_pressed"]
+[connection signal="pressed" from="ChangeName" to="." method="_on_change_name_pressed"]

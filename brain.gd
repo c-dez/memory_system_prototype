@@ -1,59 +1,68 @@
 class_name Brain
 extends Node
 
-var save_path:String = "user://player_stats.save"
+@onready var label: Label = get_node("Label")
+@onready var line_edit: LineEdit = get_node("LineEdit")
 
-var player_name: String = "Default"
-var crush_level: int = 0:
-	get:
-		return crush_level
-	set(value):
-		crush_level = clamp(value, 0, 99)
+const save_path: String = "user://player_stats.save"
+var player_stats: Dictionary = {
+	"name": "default",
+	"crush_level": 0
+}
 
-@onready var label:Label = get_node("Label")
+var _min_crush_level: int = 0
+# var _max_crush_level: int = 99
+
+
 
 func _ready() -> void:
+	line_edit.visible = false
 	load_data()
-	pass
+
 
 func _process(_delta: float) -> void:
-	label.text = str(crush_level)
+	label.text = str(player_stats)
 
 
-func save()->void:
-	var file := FileAccess.open(save_path,FileAccess.WRITE)
+func save() -> void:
+	var file := FileAccess.open(save_path, FileAccess.WRITE)
 
-	file.store_var(player_name)
-	file.store_var(crush_level)
-
-	pass
+	file.store_var(player_stats)
+	print("Saved")
 
 
-func load_data()->void:
+func load_data() -> void:
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ)
 
-		player_name = file.get_var()
-		crush_level = file.get_var()
-
+		player_stats = file.get_var()
+		print("Data loaded")
 
 
 # TESTING
 func _on_button_pressed_plus() -> void:
-	crush_level+=1
-	pass # Replace with function body.
+	player_stats["crush_level"] += 1
 
 
 func _on_button_pressed_minus() -> void:
-	crush_level -=1
-	pass # Replace with function body.
-
+	player_stats["crush_level"] -= 1
+	if player_stats["crush_level"] < _min_crush_level:
+		player_stats["crush_level"] = _min_crush_level
+	
 
 func _on_save_pressed() -> void:
 	save()
-	pass # Replace with function body.
 
 
 func _on_load_pressed() -> void:
 	load_data()
-	pass # Replace with function body.
+
+
+func _on_change_name_pressed() -> void:
+	line_edit.visible = true
+
+
+func _on_ok_pressed() -> void:
+	player_stats["name"] = line_edit.text
+	line_edit.text = ""
+	line_edit.visible = false
